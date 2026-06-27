@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import CtaLink from "../components/CtaLink.astro";
 import { site } from "../config/site";
 ---
 
@@ -9,7 +8,10 @@ import { site } from "../config/site";
     <p class="eyebrow">Investors and advisors</p>
     <h1>Building toward practical home robotics.</h1>
     <p class="lede">Lumi is an early-stage robotics product focused on the useful physical work of clearing small objects from indoor floors.</p>
-    <CtaLink href={`mailto:${site.contactEmail}?subject=${encodeURIComponent("Founder conversation about Lumi")}`}>Start a founder conversation</CtaLink>
+    <div class="contact-callout" aria-label="Founder conversation contact email">
+      <span>Start a founder conversation</span>
+      <strong>{site.contactEmail}</strong>
+    </div>
   </section>
   <section class="section shell">
     <div class="card-grid two">

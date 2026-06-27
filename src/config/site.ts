@@ -10,9 +10,3 @@ export const site = {
   youtubeUrl: "",
   githubUrl: "",
 };
-
-export const updateMailto = `mailto:${site.contactEmail}?subject=${encodeURIComponent(
-  "Lumi product updates",
-)}&body=${encodeURIComponent(
-  "Hi Lumi team,\n\nPlease send me future product updates and build notes.\n\nThanks!",
-)}`;

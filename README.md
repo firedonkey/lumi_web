@@ -55,7 +55,7 @@ lumirobot.co
 - Shared layout and navigation: `src/layouts/BaseLayout.astro`
 - Visual styling: `src/styles/global.css`
 
-If `waitlistUrl` is empty, the site uses a prefilled `mailto:` link for “Get updates by email.” Email collection needs an external form provider or a configured email workflow before it can behave like a real waitlist.
+If `waitlistUrl` is empty, the site sends visitors to the build updates page and displays the contact email as plain text. Email collection needs an external form provider or a configured email workflow before it can behave like a real waitlist.
 
 ## Prototype media needed
 

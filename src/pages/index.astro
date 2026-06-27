@@ -2,10 +2,10 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import CtaLink from "../components/CtaLink.astro";
 import PrototypeVisual from "../components/PrototypeVisual.astro";
-import { site, updateMailto } from "../config/site";
+import { site } from "../config/site";
 import { updates } from "../content/updates";
 
-const updatesHref = site.waitlistUrl || updateMailto;
+const updatesHref = site.waitlistUrl || "/updates";
 ---
 
 <BaseLayout>
@@ -111,7 +111,7 @@ const updatesHref = site.waitlistUrl || updateMailto;
       <p>Follow the build, share feedback, explore pilot-home ideas, or start a conversation about the future of practical home robotics.</p>
     </div>
     <div class="card-grid three">
-      <article class="card"><h3>Product updates</h3><p>Follow new prototype milestones and build logs.</p><a href={updatesHref}>Get updates by email</a></article>
+      <article class="card"><h3>Product updates</h3><p>Follow new prototype milestones and build logs.</p><p class="contact-address">{site.contactEmail}</p></article>
       <article class="card"><h3>Pilot homes and partners</h3><p>Interested in testing Lumi in a realistic home environment later on?</p><a href="/contact">Start a conversation</a></article>
       <article class="card"><h3>Investor conversations</h3><p>Interested in the long-term opportunity behind useful home robots?</p><a href="/investors">Learn more</a></article>
     </div>

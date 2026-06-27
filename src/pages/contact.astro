@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import CtaLink from "../components/CtaLink.astro";
 import { site } from "../config/site";
 ---
 
@@ -9,12 +8,12 @@ import { site } from "../config/site";
     <p class="eyebrow">Contact</p>
     <h1>Let’s talk about Lumi.</h1>
     <p class="lede">For product feedback, partnership ideas, pilot-home conversations, media questions, or investor introductions, reach out below.</p>
-    <CtaLink href={`mailto:${site.contactEmail}`}>{site.contactEmail}</CtaLink>
+    <p class="contact-address large">{site.contactEmail}</p>
   </section>
   <section class="section shell narrow">
     <div class="contact-panel">
       <p>Email</p>
-      <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+      <span>{site.contactEmail}</span>
     </div>
   </section>
 </BaseLayout>
