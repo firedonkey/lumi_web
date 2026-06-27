@@ -72,6 +72,6 @@ Until those files exist, the site shows illustrated fallback cards. Replace plac
 Before launch, review:
 
 - Privacy policy if analytics, cookies, or forms are enabled.
-- Contact email workflow for `hello@lumirobot.co`.
+- Contact email workflow for `gary@lumirobot.co`.
 - Update post dates and prototype status language.
 - All claims about autonomy, navigation, floor pickup, and end-to-end cleanup.

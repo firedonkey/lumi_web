@@ -4,7 +4,7 @@ export const site = {
   description:
     "Lumi is a mobile indoor cleanup robot in development, designed to identify floor objects, pick them up, and help keep living spaces clear.",
   url: "https://lumirobot.co",
-  contactEmail: "hello@lumirobot.co",
+  contactEmail: "gary@lumirobot.co",
   waitlistUrl: "",
   linkedinUrl: "",
   youtubeUrl: "",
