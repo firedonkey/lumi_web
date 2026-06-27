@@ -16,7 +16,7 @@ const { title, label, path, kind, alt } = Astro.props;
       kind === "image" ? (
         <img src={path} alt={alt} loading="lazy" onerror="this.remove()" />
       ) : (
-        <video src={path} muted playsinline preload="metadata" aria-label={alt}></video>
+        <video src={path} controls muted playsinline preload="metadata" aria-label={alt}></video>
       )
     }
     <div class="fallback-visual" aria-hidden="true">

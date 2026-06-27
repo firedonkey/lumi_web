@@ -5,6 +5,11 @@ export type UpdatePost = {
   summary: string;
   body: string[];
   tags: string[];
+  diagram?: {
+    src: string;
+    alt: string;
+    caption: string;
+  };
 };
 
 export const updates: UpdatePost[] = [
@@ -18,8 +23,16 @@ export const updates: UpdatePost[] = [
     body: [
       "Lumi starts with a mobile base that can be tested, measured, and improved safely. The current work centers on the chassis, onboard compute, sensors, low-level controls, and the safety systems needed before more autonomy is layered on top.",
       "Wheel encoders and IMU integration are part of that foundation. They help turn motion into measurable state, which is essential for repeatable indoor navigation experiments.",
+      "The current architecture separates power distribution, low-level motion control, and higher-level compute. A 24V battery feeds the power button, fuse, battery monitoring, and buck converters. The STM32 handles real-time motor-driver commands and encoder feedback, while the Jetson connects higher-level perception and autonomy work to cameras, lidar, the arm, and USB peripherals.",
+      "This separation keeps the base practical to debug: power, sensing, motor control, and onboard compute can each be tested independently before they are combined into more autonomous navigation behavior.",
       "The goal is not to rush toward a polished demo. It is to make each underlying capability dependable enough to support the next one.",
     ],
+    diagram: {
+      src: "/media/lumi-architecture.png",
+      alt: "Lumi prototype architecture diagram showing battery, BMS, buck converters, STM32, Jetson, sensors, motor driver, motors, encoders, arm, cameras, lidar, and USB hub connections.",
+      caption:
+        "Current Lumi prototype architecture. Purple lines represent power distribution, black lines represent compute and USB connections, orange lines represent sensing and encoder feedback, and green lines represent motor output paths.",
+    },
   },
   {
     slug: "teaching-an-arm-to-pick-up-from-the-floor",

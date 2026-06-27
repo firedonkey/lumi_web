@@ -25,6 +25,14 @@ if (!post) {
     <p class="lede">{post.summary}</p>
     <div class="article-body">
       {post.body.map((paragraph) => <p>{paragraph}</p>)}
+      {
+        post.diagram && (
+          <figure class="article-figure">
+            <img src={post.diagram.src} alt={post.diagram.alt} loading="lazy" />
+            <figcaption>{post.diagram.caption}</figcaption>
+          </figure>
+        )
+      }
     </div>
   </article>
 </BaseLayout>

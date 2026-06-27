@@ -18,18 +18,17 @@ const updatesHref = site.waitlistUrl || "/updates";
       </p>
       <div class="cta-row">
         <CtaLink href={updatesHref}>Follow Lumi’s build</CtaLink>
-        <CtaLink href="/updates" variant="secondary">See prototype progress</CtaLink>
       </div>
       <p class="status-line">Early prototype. Capabilities and timeline are still evolving.</p>
     </div>
-    <div class="hero-visual" aria-label="Illustration of Lumi navigating a calm living room floor">
-      <div class="room-grid"></div>
-      <div class="lumi-body"></div>
-      <div class="lumi-arm"></div>
-      <div class="floor-object object-one"></div>
-      <div class="floor-object object-two"></div>
-      <div class="home-dock"></div>
-    </div>
+    <figure class="hero-visual">
+      <img
+        class="hero-photo"
+        src="/media/lumi-product-render.jpg"
+        alt="Lumi prototype robot with mobile base, sensors, and front-mounted arm on an indoor floor"
+      />
+      <figcaption class="hero-media-label">Current prototype photo</figcaption>
+    </figure>
   </section>
 
   <section class="section shell">
@@ -77,12 +76,12 @@ const updatesHref = site.waitlistUrl || "/updates";
   <section class="section shell">
     <div class="section-heading">
       <p class="eyebrow">Prototype media</p>
-      <h2>Real footage will live here as the build matures.</h2>
+      <h2>Photos and clips from the current prototype.</h2>
     </div>
     <div class="media-grid">
-      <PrototypeVisual title="Prototype photo" label="Current prototype footage" path="/media/lumi-prototype.jpg" kind="image" alt="Future photo placeholder for the Lumi prototype" />
-      <PrototypeVisual title="Arm teleoperation clip" label="Current prototype footage" path="/media/lumi-arm-teleop.mp4" kind="video" alt="Future video placeholder for Lumi arm teleoperation" />
-      <PrototypeVisual title="Navigation and sensing visualization" label="Concept visualization — in development" path="/media/lumi-navigation-preview.mp4" kind="video" alt="Future navigation and sensing visualization placeholder" />
+      <PrototypeVisual title="Prototype photo" label="Current prototype footage" path="/media/lumi-prototype.jpg" kind="image" alt="Lumi prototype robot on an indoor floor" />
+      <PrototypeVisual title="Prototype movement clip 1" label="Current prototype footage" path="/media/lumi-arm-teleop.mp4" kind="video" alt="Video clip of the Lumi prototype and arm hardware" />
+      <PrototypeVisual title="Prototype movement clip 2" label="Current prototype footage" path="/media/lumi-navigation-preview.mp4" kind="video" alt="Video clip of the Lumi prototype hardware in motion" />
     </div>
   </section>
 
@@ -111,7 +110,7 @@ const updatesHref = site.waitlistUrl || "/updates";
       <p>Follow the build, share feedback, explore pilot-home ideas, or start a conversation about the future of practical home robotics.</p>
     </div>
     <div class="card-grid three">
-      <article class="card"><h3>Product updates</h3><p>Follow new prototype milestones and build logs.</p><p class="contact-address">{site.contactEmail}</p></article>
+      <article class="card"><h3>Product updates</h3><p>Follow new prototype milestones and build logs.</p><a href="/updates">Build Update</a></article>
       <article class="card"><h3>Pilot homes and partners</h3><p>Interested in testing Lumi in a realistic home environment later on?</p><a href="/contact">Start a conversation</a></article>
       <article class="card"><h3>Investor conversations</h3><p>Interested in the long-term opportunity behind useful home robots?</p><a href="/investors">Learn more</a></article>
     </div>
