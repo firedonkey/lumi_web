@@ -1,0 +1,70 @@
+---
+import { site } from "../config/site";
+import "../styles/global.css";
+
+type Props = {
+  title?: string;
+  description?: string;
+};
+
+const { title = site.title, description = site.description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).toString();
+const nav = [
+  { href: "/", label: "Home" },
+  { href: "/updates", label: "Updates" },
+  { href: "/investors", label: "Investors" },
+  { href: "/contact", label: "Contact" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={site.name} />
+    <meta name="twitter:card" content="summary" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <nav class="nav shell" aria-label="Primary navigation">
+        <a class="brand" href="/" aria-label="Lumi home">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>{site.name}</span>
+        </a>
+        <div class="nav-links">
+          {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+        </div>
+      </nav>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <div>
+          <a class="brand" href="/" aria-label="Lumi home">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <span>{site.name}</span>
+          </a>
+          <p>A mobile indoor cleanup robot in development.</p>
+        </div>
+        <div class="footer-links" aria-label="Footer navigation">
+          <a href="/updates">Updates</a>
+          <a href="/investors">Investors</a>
+          <a href="/contact">Contact</a>
+          <a href="/privacy">Privacy</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

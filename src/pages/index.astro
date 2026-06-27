@@ -1,0 +1,119 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CtaLink from "../components/CtaLink.astro";
+import PrototypeVisual from "../components/PrototypeVisual.astro";
+import { site, updateMailto } from "../config/site";
+import { updates } from "../content/updates";
+
+const updatesHref = site.waitlistUrl || updateMailto;
+---
+
+<BaseLayout>
+  <section class="hero shell">
+    <div class="hero-copy">
+      <p class="eyebrow">A home robot, built in public.</p>
+      <h1>A robot in development to help clear everyday clutter from the floor.</h1>
+      <p class="lede">
+        Lumi is being built to see small objects around the home, move safely through indoor spaces, pick items up with a robotic arm, and place them where they belong.
+      </p>
+      <div class="cta-row">
+        <CtaLink href={updatesHref}>Follow Lumi’s build</CtaLink>
+        <CtaLink href="/updates" variant="secondary">See prototype progress</CtaLink>
+      </div>
+      <p class="status-line">Early prototype. Capabilities and timeline are still evolving.</p>
+    </div>
+    <div class="hero-visual" aria-label="Illustration of Lumi navigating a calm living room floor">
+      <div class="room-grid"></div>
+      <div class="lumi-body"></div>
+      <div class="lumi-arm"></div>
+      <div class="floor-object object-one"></div>
+      <div class="floor-object object-two"></div>
+      <div class="home-dock"></div>
+    </div>
+  </section>
+
+  <section class="section shell">
+    <div class="section-heading">
+      <p class="eyebrow">The problem</p>
+      <h2>The floor collects the little things.</h2>
+      <p>Toys, bottles, small boxes, fabric, and everyday clutter can slowly take over shared spaces. Lumi is being developed to handle the repetitive work of finding and clearing those small objects.</p>
+    </div>
+    <div class="card-grid three">
+      <article class="card"><h3>Everyday clutter</h3><p>Small things build up fast.</p></article>
+      <article class="card"><h3>Hands-full moments</h3><p>Cleanup is easy to postpone when life is busy.</p></article>
+      <article class="card"><h3>A more helpful home robot</h3><p>Lumi is being designed to act on the physical world, not just observe it.</p></article>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Intended workflow</p>
+        <h2>From seeing clutter to clearing space.</h2>
+      </div>
+      <div class="step-grid">
+        <article class="step"><span>01 — See</span><p>Lumi observes the room and identifies objects on the floor.</p></article>
+        <article class="step"><span>02 — Decide</span><p>It chooses what to clear and plans a safe approach.</p></article>
+        <article class="step"><span>03 — Pick up</span><p>A front-mounted robot arm reaches down and grips the object.</p></article>
+        <article class="step"><span>04 — Reset the space</span><p>Lumi carries the object to a bin, then continues or returns home.</p></article>
+      </div>
+      <p class="note">This is Lumi’s intended workflow. Full autonomous cleanup is still under development.</p>
+    </div>
+  </section>
+
+  <section class="section shell">
+    <div class="section-heading">
+      <p class="eyebrow">Prototype progress</p>
+      <h2>Built one capability at a time.</h2>
+    </div>
+    <div class="card-grid two">
+      <article class="card progress"><span>Prototype</span><h3>Mobile platform</h3><p>A four-wheel chassis, onboard compute, sensors, low-level controls, and safety systems form the foundation.</p></article>
+      <article class="card progress"><span>Prototype</span><h3>Arm teleoperation</h3><p>Leader/follower teleoperation is working, enabling structured data collection and manipulation experiments.</p></article>
+      <article class="card progress"><span>In progress</span><h3>Floor pickup research</h3><p>Lumi is moving from rigid tabletop pickup toward reliable grasping of varied objects from the floor.</p></article>
+      <article class="card progress"><span>Next milestone</span><h3>Navigation foundation</h3><p>Encoders, IMU, ROS 2, robot description, lidar integration, mapping, and navigation are being built step by step.</p></article>
+    </div>
+  </section>
+
+  <section class="section shell">
+    <div class="section-heading">
+      <p class="eyebrow">Prototype media</p>
+      <h2>Real footage will live here as the build matures.</h2>
+    </div>
+    <div class="media-grid">
+      <PrototypeVisual title="Prototype photo" label="Current prototype footage" path="/media/lumi-prototype.jpg" kind="image" alt="Future photo placeholder for the Lumi prototype" />
+      <PrototypeVisual title="Arm teleoperation clip" label="Current prototype footage" path="/media/lumi-arm-teleop.mp4" kind="video" alt="Future video placeholder for Lumi arm teleoperation" />
+      <PrototypeVisual title="Navigation and sensing visualization" label="Concept visualization — in development" path="/media/lumi-navigation-preview.mp4" kind="video" alt="Future navigation and sensing visualization placeholder" />
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="shell split">
+      <div>
+        <p class="eyebrow">Build updates</p>
+        <h2>Follow the deliberate work behind Lumi.</h2>
+      </div>
+      <div class="update-list">
+        {updates.map((post) => (
+          <a class="update-row" href={`/updates/${post.slug}`}>
+            <span>{post.tags[0]}</span>
+            <strong>{post.title}</strong>
+            <p>{post.summary}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section shell">
+    <div class="section-heading">
+      <p class="eyebrow">Join the project</p>
+      <h2>Help shape Lumi early.</h2>
+      <p>Follow the build, share feedback, explore pilot-home ideas, or start a conversation about the future of practical home robotics.</p>
+    </div>
+    <div class="card-grid three">
+      <article class="card"><h3>Product updates</h3><p>Follow new prototype milestones and build logs.</p><a href={updatesHref}>Get updates by email</a></article>
+      <article class="card"><h3>Pilot homes and partners</h3><p>Interested in testing Lumi in a realistic home environment later on?</p><a href="/contact">Start a conversation</a></article>
+      <article class="card"><h3>Investor conversations</h3><p>Interested in the long-term opportunity behind useful home robots?</p><a href="/investors">Learn more</a></article>
+    </div>
+  </section>
+</BaseLayout>

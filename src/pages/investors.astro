@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CtaLink from "../components/CtaLink.astro";
+import { site } from "../config/site";
+---
+
+<BaseLayout title="Investors | Lumi" description="A factual overview of Lumi’s early-stage work toward practical home robotics.">
+  <section class="page-hero shell">
+    <p class="eyebrow">Investors and advisors</p>
+    <h1>Building toward practical home robotics.</h1>
+    <p class="lede">Lumi is an early-stage robotics product focused on the useful physical work of clearing small objects from indoor floors.</p>
+    <CtaLink href={`mailto:${site.contactEmail}?subject=${encodeURIComponent("Founder conversation about Lumi")}`}>Start a founder conversation</CtaLink>
+  </section>
+  <section class="section shell">
+    <div class="card-grid two">
+      <article class="card"><h2>The vision</h2><p>A practical robot that can see, move, pick up, and clear small objects from indoor floors.</p></article>
+      <article class="card"><h2>Why now</h2><p>Lower-cost compute, stronger robot-learning methods, and better perception tools are making more capable personal robots possible.</p></article>
+      <article class="card"><h2>Current focus</h2><p>Reliable floor pickup, navigation foundations, sensor integration, and the path toward a supervised end-to-end cleanup loop.</p></article>
+      <article class="card"><h2>Who we hope to meet</h2><p>Early investors, robotics advisors, strategic partners, and potential pilot-home collaborators.</p></article>
+    </div>
+    <p class="note">This page is for informational and relationship-building purposes only.</p>
+  </section>
+</BaseLayout>

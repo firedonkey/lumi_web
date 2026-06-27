@@ -1,0 +1,32 @@
+---
+type Props = {
+  title: string;
+  label: string;
+  path: string;
+  kind: "image" | "video";
+  alt: string;
+};
+
+const { title, label, path, kind, alt } = Astro.props;
+---
+
+<figure class="media-card">
+  <div class="media-frame">
+    {
+      kind === "image" ? (
+        <img src={path} alt={alt} loading="lazy" onerror="this.remove()" />
+      ) : (
+        <video src={path} muted playsinline preload="metadata" aria-label={alt}></video>
+      )
+    }
+    <div class="fallback-visual" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </div>
+  <figcaption>
+    <strong>{title}</strong>
+    <span>{label}</span>
+  </figcaption>
+</figure>
