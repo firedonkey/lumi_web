@@ -1,0 +1,45 @@
+---
+import type { ArchitectureSeriesKey } from "../content/updates";
+
+type Props = {
+  active: ArchitectureSeriesKey;
+};
+
+const { active } = Astro.props;
+
+const items: { key: ArchitectureSeriesKey; label: string; href: string }[] = [
+  {
+    key: "system",
+    label: "System Architecture",
+    href: "/updates/building-the-mobile-foundation",
+  },
+  {
+    key: "planning",
+    label: "Planning",
+    href: "/updates/planning-the-cleanup-loop",
+  },
+  {
+    key: "navigation",
+    label: "Navigation",
+    href: "/updates/preparing-the-navigation-stack",
+  },
+  {
+    key: "manipulation",
+    label: "Manipulation",
+    href: "/updates/teaching-an-arm-to-pick-up-from-the-floor",
+  },
+];
+---
+
+<nav class="series-nav" aria-label="Lumi architecture article series">
+  <span>Architecture series</span>
+  <div class="series-links">
+    {
+      items.map((item) => (
+        <a class:list={{ "is-active": item.key === active }} href={item.href} aria-current={item.key === active ? "page" : undefined}>
+          {item.label}
+        </a>
+      ))
+    }
+  </div>
+</nav>

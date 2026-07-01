@@ -4,19 +4,23 @@ import { updates } from "../../content/updates";
 ---
 
 <BaseLayout title="Lumi build updates" description="Prototype notes and build logs from Lumi’s mobile indoor cleanup robot development.">
-  <section class="page-hero shell">
+  <section class="page-hero updates-hero shell">
     <p class="eyebrow">Build updates</p>
     <h1>Real prototype progress, one capability at a time.</h1>
     <p class="lede">Follow the mobile platform, manipulation research, and navigation foundation as Lumi moves toward practical indoor cleanup.</p>
   </section>
-  <section class="section shell">
-    <div class="post-grid">
+  <section class="section updates-list-section shell">
+    <div class="updates-index-list">
       {updates.map((post) => (
-        <article class="post-card">
-          <div class="tag-row">{post.tags.map((tag) => <span>{tag}</span>)}</div>
-          <h2><a href={`/updates/${post.slug}`}>{post.title}</a></h2>
-          <time datetime={post.date}>{new Date(`${post.date}T00:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</time>
-          <p>{post.summary}</p>
+        <article class="updates-index-item">
+          <div class="updates-index-meta">
+            <time datetime={post.date}>{new Date(`${post.date}T00:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</time>
+            <div class="tag-row">{post.tags.map((tag) => <span>{tag}</span>)}</div>
+          </div>
+          <div>
+            <h2><a href={`/updates/${post.slug}`}>{post.title}</a></h2>
+            <p>{post.summary}</p>
+          </div>
         </article>
       ))}
     </div>

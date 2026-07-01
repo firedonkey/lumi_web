@@ -1,4 +1,5 @@
 ---
+import ArchitectureSeriesNav from "../../components/ArchitectureSeriesNav.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { updates, getUpdateBySlug } from "../../content/updates";
 
@@ -14,6 +15,11 @@ const post = Astro.props.post ?? getUpdateBySlug(slug ?? "");
 if (!post) {
   return Astro.redirect("/updates");
 }
+
+const architecture = post.architectureHub;
+const planning = post.planningArticle;
+const navigation = post.navigationArticle;
+const manipulation = post.manipulationArticle;
 ---
 
 <BaseLayout title={`${post.title} | Lumi updates`} description={post.summary}>
@@ -23,10 +29,357 @@ if (!post) {
     <h1>{post.title}</h1>
     <time datetime={post.date}>{new Date(`${post.date}T00:00:00`).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</time>
     <p class="lede">{post.summary}</p>
+    {post.subtitle && <p class="article-subtitle">{post.subtitle}</p>}
+    {post.seriesKey && <ArchitectureSeriesNav active={post.seriesKey} />}
+
     <div class="article-body">
-      {post.body.map((paragraph) => <p>{paragraph}</p>)}
+      {(post.body ?? []).map((paragraph) => <p>{paragraph}</p>)}
+
       {
-        post.diagram && (
+        architecture && (
+          <>
+            <section class="article-section">
+              <h2>Overall architecture</h2>
+              {architecture.opening.map((paragraph) => <p>{paragraph}</p>)}
+              <ol class="workflow-diagram architecture-flow" aria-label="See, plan, move, pick, store, verify, repeat cleanup loop">
+                {architecture.flow.map((step, index) => (
+                  <li>
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <strong>{step.title}</strong>
+                    {step.description && <p>{step.description}</p>}
+                  </li>
+                ))}
+              </ol>
+              <p class="diagram-caption">{architecture.flowNote}</p>
+            </section>
+
+            <section class="article-section">
+              <h2>{architecture.hardware.title}</h2>
+              <p>{architecture.hardware.description}</p>
+              {
+                post.diagram && (
+                  <figure class="article-figure">
+                    <img src={post.diagram.src} alt={post.diagram.alt} loading="lazy" />
+                    <figcaption>{post.diagram.caption}</figcaption>
+                  </figure>
+                )
+              }
+              <div class="architecture-grid" aria-label="Lumi V1 hardware foundation">
+                {architecture.hardware.layers.map((layer) => (
+                  <section class="system-overview-card">
+                    <h3>{layer.title}</h3>
+                    <ul>
+                      {layer.items.map((item) => <li>{item}</li>)}
+                    </ul>
+                    {layer.description && <p>{layer.description}</p>}
+                  </section>
+                ))}
+              </div>
+            </section>
+
+            <section class="article-section">
+              <h2>{architecture.software.title}</h2>
+              {architecture.software.description.map((paragraph) => <p>{paragraph}</p>)}
+              <div class="software-diagram" aria-label="Lumi layered software foundation">
+                <div class="diagram-node diagram-wide">Operator tools / web panel</div>
+                <div class="diagram-arrow" aria-hidden="true">↓</div>
+                <div class="diagram-node diagram-wide">Mission executive</div>
+                <div class="diagram-arrow" aria-hidden="true">↓</div>
+                <div class="diagram-node diagram-wide">ROS 2 integration layer</div>
+                <div class="diagram-branch">
+                  <div class="diagram-node">
+                    <strong>Perception</strong>
+                    <span>Camera / lidar</span>
+                  </div>
+                  <div class="diagram-node">
+                    <strong>Navigation</strong>
+                    <span>Odometry / SLAM / Nav2</span>
+                  </div>
+                  <div class="diagram-node">
+                    <strong>Manipulation</strong>
+                    <span>Teleoperation / learned policy</span>
+                  </div>
+                </div>
+                <div class="diagram-arrow" aria-hidden="true">↓</div>
+                <div class="diagram-node diagram-wide">Chassis bridge and safety interfaces</div>
+                <div class="diagram-arrow" aria-hidden="true">↓</div>
+                <div class="diagram-node diagram-wide">STM32 real-time control</div>
+                <div class="diagram-arrow" aria-hidden="true">↓</div>
+                <div class="diagram-node diagram-wide">Motors, encoders, IMU, battery, emergency stop</div>
+              </div>
+              <p class="diagram-caption">{architecture.software.stackNote}</p>
+              <p class="technical-note">{architecture.software.technicalNote}</p>
+            </section>
+
+            <section class="article-section">
+              <h2>{architecture.autonomy.title}</h2>
+              <div class="architecture-grid autonomy-card-grid" aria-label="Architecture deep dive articles">
+                {architecture.autonomy.cards.map((card) => (
+                  card.href ? (
+                    <a class="architecture-card article-link-card" href={card.href}>
+                      <h3>{card.title}</h3>
+                      <p>{card.description}</p>
+                      {card.cta && <strong>{card.cta}</strong>}
+                    </a>
+                  ) : (
+                    <section class="architecture-card">
+                      <h3>{card.title}</h3>
+                      <p>{card.description}</p>
+                    </section>
+                  )
+                ))}
+              </div>
+              <p class="article-callout">{architecture.autonomy.callout}</p>
+            </section>
+
+            <section class="article-section">
+              <h2>Current status and next milestones</h2>
+              <div class="status-grid">
+                <section class="status-card">
+                  <h3>What is taking shape</h3>
+                  <ul>{architecture.status.takingShape.map((item) => <li>{item}</li>)}</ul>
+                </section>
+                <section class="status-card">
+                  <h3>What comes next</h3>
+                  <ul>{architecture.status.next.map((item) => <li>{item}</li>)}</ul>
+                </section>
+              </div>
+              <p>{architecture.status.closing}</p>
+            </section>
+          </>
+        )
+      }
+
+      {
+        planning && (
+          <>
+            <section class="article-section">
+              <h2>What planning owns</h2>
+              {planning.ownership.map((paragraph) => <p>{paragraph}</p>)}
+            </section>
+
+            <section class="article-section">
+              <h2>Lumi's object registry</h2>
+              <div class="object-record-card" aria-label="Object record fields">
+                <h3>Object record</h3>
+                <div class="object-record-grid">
+                  {planning.objectRecord.map((item) => <span>{item}</span>)}
+                </div>
+              </div>
+              <div class="data-model-card">
+                <h4>Object status values</h4>
+                <ul class="status-chip-list">{planning.statuses.map((status) => <li>{status}</li>)}</ul>
+              </div>
+            </section>
+
+            <section class="article-section">
+              <h2>First planning algorithm</h2>
+              <p>{planning.algorithm.intro}</p>
+              <ol class="article-list ordered-list">
+                {planning.algorithm.steps.map((item) => <li>{item}</li>)}
+              </ol>
+              <div class="score-card">
+                <h3>Initial target score</h3>
+                <div>
+                  <section>
+                    <h4>Adds weight for</h4>
+                    <ul>{planning.algorithm.scoreFactors.positive.map((item) => <li>{item}</li>)}</ul>
+                  </section>
+                  <section>
+                    <h4>Subtracts weight for</h4>
+                    <ul>{planning.algorithm.scoreFactors.negative.map((item) => <li>{item}</li>)}</ul>
+                  </section>
+                </div>
+              </div>
+              <div class="architecture-grid">
+                {planning.algorithm.methods.map((method) => (
+                  <section class="architecture-card">
+                    <h3>{method.title}</h3>
+                    <p>{method.description}</p>
+                  </section>
+                ))}
+              </div>
+            </section>
+
+            <section class="article-section">
+              <h2>Cleanup task state machine</h2>
+              <ol class="pipeline-diagram long-sequence" aria-label="Cleanup task state machine">
+                {planning.stateMachine.steps.map((step) => <li>{step}</li>)}
+              </ol>
+              <div class="architecture-grid">
+                {planning.stateMachine.recoveries.map((recovery) => (
+                  <section class="architecture-card">
+                    <h3>{recovery.label}</h3>
+                    <p>{recovery.description}</p>
+                  </section>
+                ))}
+              </div>
+            </section>
+
+            <section class="article-section">
+              <h2>Local and cloud responsibilities</h2>
+              <div class="architecture-grid">
+                {planning.responsibilities.map((responsibility) => (
+                  <section class="architecture-card">
+                    <h3>{responsibility.title}</h3>
+                    <p>{responsibility.description}</p>
+                  </section>
+                ))}
+              </div>
+            </section>
+
+            <section class="article-section">
+              <h2>Planning roadmap</h2>
+              <div class="roadmap-list">
+                {planning.roadmap.map((phase) => (
+                  <section class="roadmap-stage">
+                    <h3>{phase.title}</h3>
+                    {phase.description && <p>{phase.description}</p>}
+                    {phase.items.length > 0 && <ul>{phase.items.map((item) => <li>{item}</li>)}</ul>}
+                  </section>
+                ))}
+              </div>
+            </section>
+          </>
+        )
+      }
+
+      {
+        navigation && (
+          <>
+            <section class="article-section">
+              <h2>Navigation's job</h2>
+              {navigation.job.map((paragraph) => <p>{paragraph}</p>)}
+            </section>
+
+            <section class="article-section">
+              <h2>Dependency chain</h2>
+              <ol class="dependency-diagram detailed-dependency" aria-label="Navigation dependency chain">
+                {navigation.dependencyChain.map((step) => (
+                  <li>
+                    <strong>{step.title}</strong>
+                    {step.description && <span>{step.description}</span>}
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <section class="article-section">
+              <h2>Current Lumi implementation path</h2>
+              <ul class="article-list">
+                {navigation.implementationPath.map((item) => <li>{item}</li>)}
+              </ul>
+            </section>
+
+            <section class="article-section">
+              <h2>Planned Nav2 configuration</h2>
+              <p>{navigation.nav2.intro}</p>
+              <div class="architecture-grid">
+                {navigation.nav2.configuration.map((item) => (
+                  <section class="architecture-card">
+                    <h3>{item.label}</h3>
+                    <p>{item.description}</p>
+                  </section>
+                ))}
+              </div>
+            </section>
+
+            <section class="article-section">
+              <h2>Pickup and bin standoff poses</h2>
+              {navigation.standoff.map((paragraph) => <p>{paragraph}</p>)}
+            </section>
+
+            <section class="article-section">
+              <h2>Validation roadmap</h2>
+              <ol class="article-list ordered-list">
+                {navigation.validation.map((item) => <li>{item}</li>)}
+              </ol>
+            </section>
+          </>
+        )
+      }
+
+      {
+        manipulation && (
+          <>
+            <section class="article-section">
+              <h2>Why floor pickup is difficult</h2>
+              {manipulation.difficulty.intro.map((paragraph) => <p>{paragraph}</p>)}
+              <ul class="status-chip-list factor-list" aria-label="Object variation factors">
+                {manipulation.difficulty.factors.map((factor) => <li>{factor}</li>)}
+              </ul>
+              <p class="article-callout">{manipulation.difficulty.callout}</p>
+            </section>
+
+            <section class="article-section">
+              <h2>Demonstration collection</h2>
+              {manipulation.demonstrations.intro.map((paragraph) => <p>{paragraph}</p>)}
+              <div class="architecture-grid">
+                {manipulation.demonstrations.roles.map((role) => (
+                  <section class="architecture-card">
+                    <h3>{role.title}</h3>
+                    <p>{role.description}</p>
+                  </section>
+                ))}
+              </div>
+              <div class="data-model-card">
+                <h4>Useful data variations</h4>
+                <ul>{manipulation.demonstrations.variations.map((item) => <li>{item}</li>)}</ul>
+              </div>
+            </section>
+
+            <section class="article-section">
+              <h2>Near-term learned-policy roadmap</h2>
+              <div class="roadmap-list">
+                {manipulation.roadmap.map((stage) => (
+                  <section class="roadmap-stage">
+                    <h3>{stage.title}</h3>
+                    {stage.description && <p>{stage.description}</p>}
+                    {stage.items.length > 0 && <ul>{stage.items.map((item) => <li>{item}</li>)}</ul>}
+                  </section>
+                ))}
+              </div>
+            </section>
+
+            <section class="article-section">
+              <h2>Pick, place, and verify sequence</h2>
+              <ol class="pipeline-diagram long-sequence" aria-label="Pick, place, and verify sequence">
+                {manipulation.sequence.steps.map((step) => <li>{step}</li>)}
+              </ol>
+              <div class="data-model-card">
+                <h4>This page owns</h4>
+                <ul>{manipulation.sequence.owns.map((item) => <li>{item}</li>)}</ul>
+              </div>
+              <p>{manipulation.sequence.note}</p>
+            </section>
+
+            <section class="article-section">
+              <h2>Learned policy versus safety system</h2>
+              <p class="article-callout">{manipulation.safety}</p>
+            </section>
+          </>
+        )
+      }
+
+      {
+        post.continueExploring && post.continueExploring.length > 0 && (
+          <section class="article-section">
+            <h2>Continue exploring</h2>
+            <div class="continue-grid">
+              {post.continueExploring.map((item) => (
+                <a class="architecture-card article-link-card" href={item.href}>
+                  <span>{item.label}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.description}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        post.diagram && !architecture && (
           <figure class="article-figure">
             <img src={post.diagram.src} alt={post.diagram.alt} loading="lazy" />
             <figcaption>{post.diagram.caption}</figcaption>
